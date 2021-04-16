@@ -3,8 +3,6 @@ import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Map;
 
 public class XMLHandler {
     private DocumentBuilderFactory factory;
@@ -12,6 +10,9 @@ public class XMLHandler {
     private Document document;
     private final String filePath = "src/com/company/map.xml";
     private File file;
+
+    // Change this if you want different dimensions
+    private final int dimensions = 2;
 
     public XMLHandler(){
         try{
@@ -60,13 +61,13 @@ public class XMLHandler {
 
                 TreeNode treeNode = new TreeNode(id, name);
 
-                Point[] coords = new Point[2];
+                Vertex[] coords = new Vertex[dimensions];
 
-                float[] axis = new float[2];
+                float[] axis = new float[dimensions];
                 axis[0] = lat;
                 axis[1] = lon;
 
-                Point coord1 = new Point(2);
+                Vertex coord1 = new Vertex(dimensions);
                 coord1.setAxis(axis);
 
                 coords[0] = coord1;

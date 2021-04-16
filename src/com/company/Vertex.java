@@ -1,9 +1,9 @@
 package com.company;
 
-public class Point {
+public class Vertex {
     private float[] points;
 
-    public Point(int dimensions){
+    public Vertex(int dimensions){
         points = new float[dimensions];
     }
 

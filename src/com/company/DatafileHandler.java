@@ -44,9 +44,9 @@ public class DatafileHandler {
                     writer.write(node.getId() + ",");
                     writer.write(node.getName());
 
-                    for(Point point: node.getCoords()){
+                    for(Vertex vertex: node.getCoords()){
                         writer.write(",");
-                        float[] coord = point.getCoord();
+                        float[] coord = vertex.getCoord();
 
                         String tuple = "(";
 

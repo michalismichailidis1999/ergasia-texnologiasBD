@@ -14,7 +14,7 @@ public class DatabaseHandler {
         xmlHandler = new XMLHandler();
 
         xmlHandler.saveNodesToDB(this);
-        datafileHandler = new DatafileHandler(infoBlock, blocks);
+//        datafileHandler = new DatafileHandler(infoBlock, blocks);
     }
 
     public void setInfoBlock(InfoBlock infoBlock){

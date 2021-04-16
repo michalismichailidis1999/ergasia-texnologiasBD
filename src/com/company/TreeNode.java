@@ -9,13 +9,13 @@ public class TreeNode {
 
     // Class Variables
     private String id, name;
-    private Point[] coords;
+    private Vertex[] coords;
     private ArrayList<TreeNode> children;
 
     public TreeNode(String id, String name){
         this.bytes = 8;
         this.dimensions = 2;
-        this.coords = new Point[dimensions];
+        this.coords = new Vertex[dimensions];
         this.children = new ArrayList<>();
         this.id = id;
         this.name = name;
@@ -24,7 +24,7 @@ public class TreeNode {
     public TreeNode(String id, String name, int dimensions){
         this.bytes = 8;
         this.dimensions = dimensions;
-        this.coords = new Point[dimensions];
+        this.coords = new Vertex[dimensions];
         this.children = new ArrayList<>();
         this.id = id;
         this.name = name;
@@ -38,13 +38,13 @@ public class TreeNode {
         return name;
     }
 
-    public Point[] getCoords() {
+    public Vertex[] getCoords() {
         return coords;
     }
 
     public  int getBytes(){ return this.bytes; }
 
-    public void setCoords(Point[] coords) {
+    public void setCoords(Vertex[] coords) {
         this.coords = coords;
     }
 }
