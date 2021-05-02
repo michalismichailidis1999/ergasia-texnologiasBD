@@ -1,15 +1,15 @@
 package com.company;
 
 public class Vertex {
-    private float[] points;
+    private float[] axisValues;
 
     public Vertex(int dimensions){
-        points = new float[dimensions];
+        axisValues = new float[dimensions];
     }
 
-    public float[] getCoord(){ return points; }
+    public float[] getCoord(){ return axisValues; }
 
-    public void setAxis(float[] points){
-        this.points = points;
+    public void setCoord(float[] axisValues){
+        this.axisValues = axisValues;
     }
 }

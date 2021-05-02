@@ -11,9 +11,6 @@ public class XMLHandler {
     private final String filePath = "src/com/company/map.xml";
     private File file;
 
-    // Change this if you want different dimensions
-    private final int dimensions = 2;
-
     public XMLHandler(){
         try{
             file = new File(filePath);
@@ -59,23 +56,30 @@ public class XMLHandler {
                 float lat = Float.parseFloat(nodeElement.getAttribute("lat"));
                 float lon = Float.parseFloat(nodeElement.getAttribute("lon"));
 
-                TreeNode treeNode = new TreeNode(id, name);
+                NodeData nodeData = new NodeData(id, name, 2);
 
-                Vertex[] coords = new Vertex[dimensions];
+                Vertex[] rectBounds = new Vertex[2];
 
-                float[] axis = new float[dimensions];
-                axis[0] = lat;
-                axis[1] = lon;
+                float[] point1 = new float[2];
+                point1[0] = lat;
+                point1[1] = lat;
 
-                Vertex coord1 = new Vertex(dimensions);
-                coord1.setAxis(axis);
+                Vertex bound1 = new Vertex(2);
+                bound1.setCoord(point1);
 
-                coords[0] = coord1;
-                coords[1] = coord1;
+                float[] point2 = new float[2];
+                point2[0] = lon;
+                point2[1] = lon;
 
-                treeNode.setCoords(coords);
+                Vertex bound2 = new Vertex(2);
+                bound1.setCoord(point2);
 
-                boolean isAdded = databaseHandler.getBlocks().get(blockId).addNode(treeNode);
+                rectBounds[0] = bound1;
+                rectBounds[1] = bound2;
+
+                nodeData.setBounds(rectBounds);
+
+                boolean isAdded = databaseHandler.getBlocks().get(blockId).addData(nodeData);
 
                 if(!isAdded){
                     currentBlock++;

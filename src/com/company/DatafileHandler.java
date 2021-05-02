@@ -40,11 +40,11 @@ public class DatafileHandler {
             for(Map.Entry<String, DataBlock> blockEntry: blocks.entrySet()){
                 writer.write("\n" + blockEntry.getKey() + "\n");
 
-                for(TreeNode node: blockEntry.getValue().getNodes()){
+                for(NodeData node: blockEntry.getValue().getData()){
                     writer.write(node.getId() + ",");
                     writer.write(node.getName());
 
-                    for(Vertex vertex: node.getCoords()){
+                    for(Vertex vertex: node.getBounds()){
                         writer.write(",");
                         float[] coord = vertex.getCoord();
 
