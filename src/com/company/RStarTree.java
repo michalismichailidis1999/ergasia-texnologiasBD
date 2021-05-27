@@ -269,4 +269,49 @@ public class RStarTree {
             rIdx++;
         }
     }
+
+    public void rangeQuery(Vertex[] bounds){
+        ArrayList<TreeIndex> roots = new ArrayList<>();
+
+        TreeIndex treeIndex = new TreeIndex(0, dimensions);
+        treeIndex.setInitialBounds(bounds);
+
+        for(TreeIndex root: rootIndices){
+            if(root.isCollidingWith(treeIndex)){
+                roots.add(root);
+            }
+        }
+
+        ArrayList<TreeIndex> nonLeafs = new ArrayList<>();
+
+        for(TreeIndex root: roots){
+            for(TreeIndex nonLeaf: root.getChildren()){
+                if(nonLeaf.isCollidingWith(treeIndex)){
+                    nonLeafs.add(nonLeaf);
+                }
+            }
+        }
+
+        ArrayList<TreeIndex> leafs = new ArrayList<>();
+
+        for(TreeIndex nonLeaf: nonLeafs){
+            for(TreeIndex leaf: nonLeaf.getChildren()){
+                if(leaf.isCollidingWith(treeIndex)){
+                    leafs.add(leaf);
+                }
+            }
+        }
+
+        for(TreeIndex t: leafs){
+            System.out.println(
+                    "Leaf Bounds: ("
+                            + t.getMinBoundValues().getCoord()[0]
+                            + "," + t.getMinBoundValues().getCoord()[1]
+                            + "," + t.getMaxBoundValues().getCoord()[0]
+                            + "," + t.getMaxBoundValues().getCoord()[1]
+                            + ")");
+
+            System.out.println("");
+        }
+    }
 }

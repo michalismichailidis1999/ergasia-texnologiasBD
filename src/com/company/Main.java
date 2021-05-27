@@ -25,9 +25,24 @@ public class Main {
             }
         }
 
-        rStarTree.printRootIndicesWithChildren();
+        //rStarTree.printRootIndicesWithChildren();
 
         // TODO: Range queries here
+        Vertex[] bounds = new Vertex[2];
+
+        Vertex v1 =  new Vertex(2);
+        float[] point1 = {1f, 3f};
+        v1.setCoord(point1);
+
+        Vertex v2 =  new Vertex(2);
+        float[] point2 = {4f, 7f};
+        v2.setCoord(point2);
+
+        bounds[0] = v1;
+        bounds[1] = v2;
+
+        rStarTree.rangeQuery(bounds);
+
 
         // TODO: k-nn queries here
     }

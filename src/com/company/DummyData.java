@@ -17,8 +17,6 @@ public class DummyData {
 
         blocks.put("block_1", new DataBlock());
 
-
-
         float[][][] points = {
                 {
                         {1, 2}, {2, 4}

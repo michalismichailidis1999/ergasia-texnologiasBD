@@ -276,4 +276,17 @@ public class TreeIndex {
             maxBoundValues.setCoord(point);
         }
     }
+
+    public boolean isCollidingWith(TreeIndex other){
+        int count = 0;
+
+        for(int i = 0; i < dimensions; i++){
+            if(minBoundValues.getCoord()[i] < other.getMaxBoundValues().getCoord()[i]
+            && maxBoundValues.getCoord()[i] > other.getMinBoundValues().getCoord()[i]){
+                count++;
+            }
+        }
+
+        return count == dimensions;
+    }
 }
