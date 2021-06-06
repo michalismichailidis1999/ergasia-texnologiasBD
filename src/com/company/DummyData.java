@@ -44,6 +44,7 @@ public class DummyData {
                 }
         };
 
+
         for(int i = 0; i < points.length; i++){
             NodeData node = new NodeData("1", "node" + (i + 1), dimensions);
 

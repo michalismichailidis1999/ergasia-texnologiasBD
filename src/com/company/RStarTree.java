@@ -1,6 +1,17 @@
 package com.company;
 
+import com.sun.source.tree.Tree;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.ArrayList;
+
+class SortByDistance implements Comparator<ArrayList<Double>>{
+    @Override
+    public int compare(ArrayList<Double> a , ArrayList<Double> b){
+        return a.get(0).compareTo(b.get(0));
+    }
+}
 
 public class RStarTree {
     private final int dimensions;
@@ -49,6 +60,87 @@ public class RStarTree {
         }
 
         root.adjustBounds();
+    }
+
+
+    public Vertex[] knn(int n,Vertex point){
+
+        ArrayList<TreeIndex> nearestIndices = new ArrayList<TreeIndex>(n);
+        TreeIndex origin = new TreeIndex(-1,2);
+        for(TreeIndex root : rootIndices){
+            origin.addChild(root);
+        }
+        scaleAndFind(origin,nearestIndices,point,n);
+        Vertex[] nearestNeighbours = new Vertex[n];
+        for(int i = 0 ; i < n ; i++){
+            nearestNeighbours[i] = new Vertex(2);
+            float[] coords = nearestIndices.get(i).getMaxBoundValues().getCoord();
+            nearestNeighbours[i].setCoord(coords);
+        }
+        return nearestNeighbours;
+    }
+
+
+    private void scaleAndFind(TreeIndex current, ArrayList<TreeIndex> closest,Vertex point, int n){
+
+        /**
+         * If children ArrayList exists,then we have a non-leaf Node.
+         */
+        if(current.getChildren().size() != 0){
+            int childCount = current.getChildren().size();
+            ArrayList<TreeIndex> children = current.getChildren();
+            ArrayList<ArrayList<Double>> distances = new ArrayList<>();
+            /**
+             * Storing distance for every child of the current Node.
+             */
+            for(int i = 0 ; i < childCount ; i++){
+                ArrayList<Double> pair = new ArrayList<>();
+                pair.add(children.get(i).getDistanceFromEdge(point));
+                pair.add((double)i);
+                distances.add(pair);
+            }
+            /**
+             * Sorting Distances,while storing the original Indices.
+             */
+            Collections.sort(distances,new SortByDistance());
+            /**
+             * Loop through every child,in the order they are sorted.
+             * If our nearest-neighbours array is full,check to see if we can ignore this branch.
+             */
+            for(int i = 0 ; i < childCount ; i++) {
+                TreeIndex child = current.getChildren().get(distances.get(i).get(1).intValue());
+                if (closest.size() == n) {
+                    if (child.getDistanceFromEdge(point) < closest.get(closest.size() - 1).getDistanceFromEdge(point)) {
+                        scaleAndFind(child, closest, point, n);
+                    }
+                } else {
+                    scaleAndFind(child, closest, point, n);
+                }
+            }
+            /**
+             * ArrayList Children doesn't exist,so we have a leaf Node.
+              */
+        } else {
+            if(closest.size() == 0){
+                closest.add(current);
+            } else {
+                int i;
+                for(i = 0 ; i < closest.size() ; i++){
+                    if(current.getDistanceFromEdge(point) < closest.get(i).getDistanceFromEdge(point)){
+                        break;
+                    }
+                }
+                if(i == closest.size() ) {
+                    closest.add(current);
+                } else {
+                    for(int j = closest.size() - 2 ; j >= i ; j++){
+                        closest.set(j+1,closest.get(j));
+                    }
+                    closest.set(i,current);
+                }
+            }
+
+        }
     }
 
     private void insertRootIndex(String blockPointer, String nodePointer, Vertex[] bounds){
@@ -220,6 +312,7 @@ public class RStarTree {
             }
         }
     }
+
 
     public void printRootIndicesWithChildren(){
         int rIdx = 0;

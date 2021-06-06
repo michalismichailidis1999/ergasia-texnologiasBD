@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
 
@@ -45,5 +46,17 @@ public class Main {
 
 
         // TODO: k-nn queries here
+        Vertex v3 =  new Vertex(2);
+        float[] point3 = {20f, 20f};
+        v3.setCoord(point3);
+
+        Scanner input = new Scanner(System.in);
+        int neigboursToFind = input.nextInt();
+
+        Vertex[] verts = rStarTree.knn(neigboursToFind,v3);
+        System.out.println("The " + neigboursToFind  +" nearest neighbours are:");
+        for(Vertex vert : verts){
+            System.out.println(vert.getCoord()[0] + " " + vert.getCoord()[1]);
+        }
     }
 }

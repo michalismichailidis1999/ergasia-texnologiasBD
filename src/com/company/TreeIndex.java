@@ -1,5 +1,6 @@
 package com.company;
 
+import java.lang.Math;
 import java.util.ArrayList;
 
 public class TreeIndex {
@@ -141,6 +142,50 @@ public class TreeIndex {
         adjustBounds();
 
         return true;
+    }
+
+    public double getDistanceFromEdge(Vertex point){
+        double distance = 0;
+
+        if(point.getCoord()[0] > this.getMaxBoundValues().getCoord()[0]){
+            if(point.getCoord()[1] > this.getMaxBoundValues().getCoord()[1]){
+                distance = Math.sqrt( Math.pow(point.getCoord()[0] - this.getMaxBoundValues().getCoord()[0],2) + Math.pow(point.getCoord()[1] - this.getMaxBoundValues().getCoord()[1],2));
+            } else if(point.getCoord()[1] < this.getMinBoundValues().getCoord()[1]){
+                distance = Math.sqrt( Math.pow(point.getCoord()[0] - this.getMaxBoundValues().getCoord()[0],2) + Math.pow(point.getCoord()[1] - this.getMinBoundValues().getCoord()[1],2));
+            } else {
+                distance = point.getCoord()[0] - this.getMaxBoundValues().getCoord()[0];
+            }
+        } else if(point.getCoord()[0] < this.getMinBoundValues().getCoord()[0]){
+            if(point.getCoord()[1] > this.getMaxBoundValues().getCoord()[1]){
+                distance = Math.sqrt( Math.pow(point.getCoord()[0] - this.getMinBoundValues().getCoord()[0],2) + Math.pow(point.getCoord()[1] - this.getMaxBoundValues().getCoord()[1],2));
+            } else if(point.getCoord()[1] < this.getMinBoundValues().getCoord()[1]){
+                distance = Math.sqrt( Math.pow(point.getCoord()[0] - this.getMinBoundValues().getCoord()[0],2) + Math.pow(point.getCoord()[1] - this.getMinBoundValues().getCoord()[1],2));
+            } else {
+                distance =  this.getMinBoundValues().getCoord()[0] - point.getCoord()[0];
+            }
+        } else {
+            if(point.getCoord()[1] > this.getMaxBoundValues().getCoord()[1]){
+                distance = point.getCoord()[1] - this.getMaxBoundValues().getCoord()[1];
+            } else if(point.getCoord()[1] < this.getMinBoundValues().getCoord()[1]) {
+                distance = this.getMinBoundValues().getCoord()[1] - point.getCoord()[1];
+            } else {
+                System.out.println("Point is inside");
+            }
+        }
+
+        return distance;
+    }
+
+    public boolean isInsideBounds(Vertex other){
+        int count = 0;
+
+        for(int i = 0; i < dimensions; i++){
+            if(other.getCoord()[i] >= minBoundValues.getCoord()[i] && other.getCoord()[i] <= maxBoundValues.getCoord()[i]){
+                count++;
+            }
+        }
+
+        return count == dimensions;
     }
 
     public boolean isInsideBounds(Vertex[] other){
