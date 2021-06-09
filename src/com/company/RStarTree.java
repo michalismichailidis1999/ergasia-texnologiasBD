@@ -1,7 +1,5 @@
 package com.company;
 
-import com.sun.source.tree.Tree;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.ArrayList;
@@ -79,7 +77,6 @@ public class RStarTree {
         }
         return nearestNeighbours;
     }
-
 
     private void scaleAndFind(TreeIndex current, ArrayList<TreeIndex> closest,Vertex point, int n){
 
@@ -313,57 +310,7 @@ public class RStarTree {
         }
     }
 
-
-    public void printRootIndicesWithChildren(){
-        int rIdx = 0;
-        for(TreeIndex root: rootIndices){
-            System.out.println("Root Index: " + rIdx);
-            System.out.println(
-                    "Root Bounds: ("
-                            + root.getMinBoundValues().getCoord()[0]
-                            + "," + root.getMinBoundValues().getCoord()[1]
-                            + "," + root.getMaxBoundValues().getCoord()[0]
-                            + "," + root.getMaxBoundValues().getCoord()[1]
-                            + ")");
-
-            System.out.println("");
-            int nIdx = 0;
-            for(TreeIndex nonLeaf: root.getChildren()){
-                System.out.println("NonLeaf Index: " + nIdx);
-                System.out.println(
-                        "NonLeaf Bounds: ("
-                                + nonLeaf.getMinBoundValues().getCoord()[0]
-                                + "," + nonLeaf.getMinBoundValues().getCoord()[1]
-                                + "," + nonLeaf.getMaxBoundValues().getCoord()[0]
-                                + "," + nonLeaf.getMaxBoundValues().getCoord()[1]
-                                + ")");
-
-                System.out.println("");
-                int lIdx = 0;
-                for(TreeIndex leaf: nonLeaf.getChildren()){
-                    System.out.println("Leaf Index: " + lIdx);
-                    System.out.println(
-                            "Leaf Bounds: ("
-                                    + leaf.getMinBoundValues().getCoord()[0]
-                                    + "," + leaf.getMinBoundValues().getCoord()[1]
-                                    + "," + leaf.getMaxBoundValues().getCoord()[0]
-                                    + "," + leaf.getMaxBoundValues().getCoord()[1]
-                                    + ")");
-
-                    System.out.println("");
-                    lIdx++;
-                }
-
-                nIdx++;
-            }
-
-            System.out.println("==================================================================");
-            System.out.println("");
-            rIdx++;
-        }
-    }
-
-    public void rangeQuery(Vertex[] bounds){
+    public ArrayList<TreeIndex> rangeQuery(Vertex[] bounds){
         ArrayList<TreeIndex> roots = new ArrayList<>();
 
         TreeIndex treeIndex = new TreeIndex(0, dimensions);
@@ -395,16 +342,6 @@ public class RStarTree {
             }
         }
 
-        for(TreeIndex t: leafs){
-            System.out.println(
-                    "Leaf Bounds: ("
-                            + t.getMinBoundValues().getCoord()[0]
-                            + "," + t.getMinBoundValues().getCoord()[1]
-                            + "," + t.getMaxBoundValues().getCoord()[0]
-                            + "," + t.getMaxBoundValues().getCoord()[1]
-                            + ")");
-
-            System.out.println("");
-        }
+        return leafs;
     }
 }

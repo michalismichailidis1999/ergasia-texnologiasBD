@@ -4,12 +4,13 @@ import java.io.*;
 import java.util.Map;
 
 public class DatafileHandler {
-    private final String filePath = "src/com/company/datafile";
+    private final String filePath;
     private File file;
     private BufferedWriter writer;
     private boolean fileExists;
 
-    public DatafileHandler(InfoBlock infoBlock, Map<String, DataBlock> blocks){
+    public DatafileHandler(String filePath, InfoBlock infoBlock, Map<String, DataBlock> blocks){
+        this.filePath = filePath;
         this.file = new File(filePath);
 
         if(!file.exists()){
@@ -19,6 +20,18 @@ public class DatafileHandler {
         }
 
         writeToFile(infoBlock, blocks);
+    }
+
+    public DatafileHandler(String filePath){
+        this.filePath = filePath;
+
+        this.file = new File(filePath);
+
+        if(!file.exists()){
+            fileExists = false;
+        }else{
+            fileExists = true;
+        }
     }
 
     private void writeToFile(InfoBlock infoBlock, Map<String, DataBlock> blocks){
@@ -66,6 +79,22 @@ public class DatafileHandler {
                     writer.write("\n");
                 }
             }
+
+            writer.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void appendToFile(long millis){
+        if(!fileExists){
+            return;
+        }
+
+        try{
+            writer = new BufferedWriter(new FileWriter(file, true));
+
+            writer.write(millis + "\n");
 
             writer.close();
         }catch(IOException e){
