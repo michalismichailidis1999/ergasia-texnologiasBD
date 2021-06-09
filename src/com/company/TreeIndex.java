@@ -11,8 +11,8 @@ public class TreeIndex {
     private Vertex minBoundValues;
     private Vertex maxBoundValues;
 
-    public static final int m = 1; // minimum number of children
-    public static final int M = 4; // maximum number of children
+    public static final int m = 2; // minimum number of children
+    public static final int M = 40; // maximum number of children
 
     // Non-Leaf Node Constructor
     public TreeIndex(int level, int dimensions){
@@ -174,18 +174,6 @@ public class TreeIndex {
         }
 
         return distance;
-    }
-
-    public boolean isInsideBounds(Vertex other){
-        int count = 0;
-
-        for(int i = 0; i < dimensions; i++){
-            if(other.getCoord()[i] >= minBoundValues.getCoord()[i] && other.getCoord()[i] <= maxBoundValues.getCoord()[i]){
-                count++;
-            }
-        }
-
-        return count == dimensions;
     }
 
     public boolean isInsideBounds(Vertex[] other){
