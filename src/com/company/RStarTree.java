@@ -62,7 +62,6 @@ public class RStarTree {
 
 
     public Vertex[] knn(int n,Vertex point){
-
         ArrayList<TreeIndex> nearestIndices = new ArrayList<TreeIndex>(n);
         TreeIndex origin = new TreeIndex(-1,2);
         for(TreeIndex root : rootIndices){
@@ -70,7 +69,7 @@ public class RStarTree {
         }
         scaleAndFind(origin,nearestIndices,point,n);
         Vertex[] nearestNeighbours = new Vertex[n];
-        for(int i = 0 ; i < n ; i++){
+        for(int i = 0 ; i < nearestIndices.size() ; i++){
             nearestNeighbours[i] = new Vertex(2);
             float[] coords = nearestIndices.get(i).getMaxBoundValues().getCoord();
             nearestNeighbours[i].setCoord(coords);
@@ -130,7 +129,7 @@ public class RStarTree {
                 if(i == closest.size() ) {
                     closest.add(current);
                 } else {
-                    for(int j = closest.size() - 2 ; j >= i ; j++){
+                    for(int j = closest.size() - 2 ; j >= i ; j--){
                         closest.set(j+1,closest.get(j));
                     }
                     closest.set(i,current);
