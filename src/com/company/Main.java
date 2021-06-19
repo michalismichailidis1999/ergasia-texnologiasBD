@@ -61,8 +61,6 @@ public class Main {
             lon2 -= lonStep;
         }
 
-        System.out.println("=============================================================");
-
         // K-NN queries here
         System.out.println("KNN Queries");
 
