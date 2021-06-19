@@ -14,6 +14,8 @@ public class DatabaseHandler {
         xmlHandler = new XMLHandler();
 
         xmlHandler.saveNodesToDB(this);
+        // For the datafileHandler to work just create a text file with name datafile datafile
+        // and uncomment the line bellow if you want to append the nodes in a text file also
 //        datafileHandler = new DatafileHandler("/src/com/company/datafile", infoBlock, blocks);
     }
 

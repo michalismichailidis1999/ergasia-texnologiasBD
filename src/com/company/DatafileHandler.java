@@ -85,20 +85,4 @@ public class DatafileHandler {
             e.printStackTrace();
         }
     }
-
-    public void appendToFile(long millis){
-        if(!fileExists){
-            return;
-        }
-
-        try{
-            writer = new BufferedWriter(new FileWriter(file, true));
-
-            writer.write(millis + "\n");
-
-            writer.close();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
 }
